@@ -9,11 +9,11 @@ class calico (
   validate_bool($enable_compute)
   validate_bool($enable_controller)
 
-  if $compute {
+  if $enable_compute {
     include ::calico::compute
   }
 
-  if $controller {
+  if $enable_controller {
     include ::calico::controller
   }
 
