@@ -1,23 +1,20 @@
 # == Class: calico
 #
 class calico (
-  $enable_compute    = false,
-  $enable_controller = false,
-  $manage_repo       = false,
+  $compute     = false,
+  $controller  = false,
+  $manage_repo = false,
 ) inherits calico::params {
 
-  validate_bool($enable_compute)
-  validate_bool($enable_controller)
+  validate_bool($compute)
+  validate_bool($controller)
 
-  if $enable_compute {
-    include ::calico::compute
+  if $compute {
+    contain ::calico::compute
   }
 
-  if $enable_controller {
-    include ::calico::controller
+  if $controller {
+    contain ::calico::controller
   }
-
-  contain 'calico::compute'
-  contain 'calico::controller'
 
 }
