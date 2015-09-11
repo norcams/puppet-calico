@@ -1,24 +1,23 @@
 # == Class: calico
 #
-class calico::compute (
+class calico (
+  $enable_compute    = false,
+  $enable_controller = false,
+  $manage_repo       = false,
 ) inherits calico::params {
 
-  package { 'calico-compute':
-    ensure => installed,
+  validate_bool($enable_compute)
+  validate_bool($enable_controller)
+
+  if $compute {
+    include ::calico::compute
   }
 
-  exec { 'cp_default_config':
-    command => 'cp /etc/calico/felix.cfg.example /etc/calico/felix.cfg',
-    unless  => 'test -f /etc/calico/felix.cfg',
+  if $controller {
+    include ::calico::controller
   }
 
-  service { 'calico-felix':
-    ensure => running,
-  }
-
-  # Install the package, then copy the configuration and notify the service
-  Package['calico-compute'] ->
-  Exec['cp_default_config'] ~>
-  Service['calico-feliẍ́']
+  contain 'calico::compute'
+  contain 'calico::controller'
 
 }
