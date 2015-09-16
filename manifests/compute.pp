@@ -10,15 +10,9 @@ class calico::compute (
     ensure => installed,
   }
 
-  service { $compute_metadata_service:
-    ensure => running,
-  }
-
   package { $compute_package:
     ensure => installed,
   }
-
-  service [
 
   exec { 'cp_default_config':
     path    => ['/usr/bin', '/usr/sbin', '/bin'],
