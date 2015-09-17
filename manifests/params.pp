@@ -7,8 +7,8 @@ class calico::params {
   $manage_packages                  = false
   $manage_repo                      = false
   $manage_epel                      = false
-  $compute_metadata_service_default = 'openstack-nova-api'
-  $compute_metadata_package_default = 'openstack-nova-metadata-api'
+  $compute_metadata_service_default = 'openstack-nova-metadata-api'
+  $compute_metadata_package_default = 'openstack-nova-api'
   $compute_package_default          = 'calico-compute'
   $compute_service_default          = 'calico-felix'
   $controller_package_default       = 'calico-control'

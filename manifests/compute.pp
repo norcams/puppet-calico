@@ -10,6 +10,10 @@ class calico::compute (
     ensure => installed,
   }
 
+  service { $compute_metadata_service:
+    ensure => running,
+  }
+
   package { $compute_package:
     ensure => installed,
   }
@@ -30,6 +34,6 @@ class calico::compute (
   Service[$compute_service]
 
   Package[$compute_metadata_package] ~>
-  Service[$compute_metdata_service]
+  Service[$compute_metadata_service]
 
 }
