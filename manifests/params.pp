@@ -4,6 +4,8 @@
 #
 class calico::params {
   $ensure                           = present
+  $enable_ipv4                      = true
+  $enable_ipv6                      = true
   $manage_packages                  = false
   $manage_repo                      = false
   $manage_epel                      = false

@@ -1,20 +1,14 @@
 # == Class: calico
 #
 class calico::compute (
+  $manage_bird = true,
+  $peers       = {},
 ) inherits calico::params {
 
-  include ::calico::compute::qemu
-  include ::neutron::agents::dhcp
+  include 'calico::compute::qemu'
+  include 'neutron::agents::dhcp'
 
-  package { $compute_metadata_package:
-    ensure => installed,
-  }
-
-  service { $compute_metadata_service:
-    ensure => running,
-  }
-
-  package { $compute_package:
+  package { $calico::params::compute_package:
     ensure => installed,
   }
 
@@ -24,16 +18,29 @@ class calico::compute (
     unless  => 'test -f /etc/calico/felix.cfg',
   }
 
-  service { $compute_service:
+  service { $calico::params::compute_service:
     ensure => running,
   }
 
-  # Install the package, then copy the configuration and notify the service
-  Package[$compute_package] ->
-  Exec['cp_default_config'] ~>
-  Service[$compute_service]
+  package { $calico::params::compute_metadata_package:
+    ensure => installed,
+  }
 
-  Package[$compute_metadata_package] ~>
-  Service[$compute_metadata_service]
+  service { $calico::params::compute_metadata_service:
+    ensure => running,
+  }
+
+  if $manage_bird {
+    include 'calico::bird'
+    calico::compute::peer { $calico::compute::peers: }
+  }
+
+  # Install the package, then copy the configuration and notify the service
+  Package[$calico::params::compute_package] ->
+  Exec['cp_default_config'] ~>
+  Service[$calico::params::compute_service]
+
+  Package[$calico::params::compute_metadata_package] ~>
+  Service[$calico::params::compute_metadata_service]
 
 }

@@ -1,0 +1,10 @@
+protocol bgp 'example' {
+  description "<node_ip>";
+  local as <as_number>;
+  neighbor <node_ip> as <as_number>;
+  multihop;
+  rr client;
+  graceful restart;
+  import all;
+  export all;
+}

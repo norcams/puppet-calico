@@ -2,8 +2,8 @@
 # Configuration values documented at
 # http://docs.projectcalico.org/en/latest/redhat-opens-install.html
 #
-class calico::compute::qemu (
-) inherits calico::params {
+class calico::compute::qemu {
+  include 'calico::params'
 
   augeas { 'qemu_cgroup_device_acl':
     context   => "/files${qemu_conf}/",
