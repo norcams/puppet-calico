@@ -1,22 +1,15 @@
 #
-define calico::compute::peer(
+define calico::bird::peer(
   $ensure   = 'present',
   $local_as = 65535,
   $local_ip = $ipaddress,
   $peer_as  = 65535,
   $peer_ip,
   $protocol = 'ipv4',
-  $template = undef,
+  $template,
 ) {
   validate_integer($peer_as)
   validate_integer($local_as)
-
-  # Handle defaults
-  if $template == undef {
-    $real_template = 'calico/compute/peer.erb'
-  } else {
-    $real_template = $template
-  }
 
   # Remove dots in filename
   $filename = regsubst($name, '\.', '_', 'G')
@@ -28,7 +21,8 @@ define calico::compute::peer(
 
       file { "${calico::bird::birdconfd}/${filename}.conf":
         ensure  => $ensure,
-        content => template($real_template),
+        content => template($template),
+        notify  => Service[$bird::params::daemon_name_v4],
       }
     }
     /(?i-mx:ipv6)/: {
@@ -37,9 +31,11 @@ define calico::compute::peer(
 
       file { "${calico::bird::bird6confd}/${filename}.conf":
         ensure  => $ensure,
-        content => template($real_template),
+        content => template($template),
+        notify  => Service[$bird::params::daemon_name_v6],
       }
     }
     default: { fail("Invalid ip protocol: $protocol") }
   }
+
 }

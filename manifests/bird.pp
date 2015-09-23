@@ -21,12 +21,14 @@ class calico::bird {
       file { $bird::params::config_path_v4:
         ensure  => present,
         content => template($bird_template),
+        notify => Service[$bird::params::daemon_name_v4],
       }
     }
     if $calico::enable_ipv6 {
       file { $bird::params::config_path_v6:
         ensure  => present,
         content => template($bird6_template),
+        notify => Service[$bird::params::daemon_name_v6],
       }
     }
   }

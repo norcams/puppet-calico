@@ -5,7 +5,7 @@ class calico::reflector (
   $manage_bird_config      = $calico::reflector_manage_bird_config,
   $manage_clients          = $calico::reflector_manage_clients,
   $client_defaults         = {},
-  $client_template         = $calico::reflector_peer_template,
+  $client_template         = $calico::reflector_client_template,
   $clients                 = {},
   $router_id               = $calico::router_id,
 ) {
@@ -23,10 +23,10 @@ class calico::reflector (
   if $manage_clients {
     contain 'calico::bird'
     $client_resources = keys($clients)
-    calico::reflector::clients { $client_resources:
-      client_defaults => $client_defaults,
-      client_template => $client_template,
-      clients         => $clients,
+    calico::bird::peers { $client_resources:
+      peer_defaults => $client_defaults,
+      peer_template => $client_template,
+      peers         => $clients,
     }
   }
 

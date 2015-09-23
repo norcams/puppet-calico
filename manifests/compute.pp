@@ -16,9 +16,16 @@ class calico::compute (
   $router_id               = $calico::router_id,
 ) {
 
+  validate_bool($felix_enable)
+  validate_bool($metadata_service_enable)
+  validate_bool($manage_bird_config)
   validate_bool($manage_dhcp_agent)
+  validate_bool($manage_metadata_service)
   validate_bool($manage_peers)
   validate_bool($manage_qemu_settings)
+  validate_hash($peer_defaults)
+  validate_hash($peers)
+  validate_ipv4_address($router_id)
 
   if $manage_dhcp_agent { include 'neutron::agents::dhcp' }
   if $manage_qemu_settings { include 'calico::compute::qemu' }
@@ -60,7 +67,7 @@ class calico::compute (
   if $manage_peers {
     contain 'calico::bird'
     $peer_resources = keys($peers)
-    calico::compute::peers { $peer_resources:
+    calico::bird::peers { $peer_resources:
       peer_defaults => $peer_defaults,
       peer_template => $peer_template,
       peers         => $peers,

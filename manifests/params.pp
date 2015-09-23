@@ -14,7 +14,7 @@ class calico::params {
   $compute_metadata_service_default = 'openstack-nova-metadata-api'
   $compute_metadata_service_enable  = true
   $compute_package_default          = 'calico-compute'
-  $compute_peer_tempalte            = 'calico/compute/peer.erb'
+  $compute_peer_template            = 'calico/compute/peer.erb'
   $controller_package_default       = 'calico-control'
   $enable_ipv4                      = true
   $enable_ipv6                      = true
