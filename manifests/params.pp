@@ -16,6 +16,7 @@ class calico::params {
   $compute_service_conf             = '/etc/calico/felix.conf'
   $compute_service_default          = 'calico-felix'
   $compute_service_enable           = true
+  $compute_service_template         = 'calico/compute/felix.conf.erb'
   $controller_package_default       = 'calico-control'
   $controller_service_default       = 'neutron-server'
   $enable_ipv4                      = true
