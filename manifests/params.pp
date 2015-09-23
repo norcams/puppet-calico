@@ -17,10 +17,10 @@ class calico::params {
   $controller_package_default       = 'calico-control'
   $enable_ipv4                      = true
   $enable_ipv6                      = true
-  $felix_conf                       = '/etc/calico/felix.conf'
+  $felix_conf                       = '/etc/calico/felix.cfg'
   $felix_enable                     = true
   $felix_service_default            = 'calico-felix'
-  $felix_template                   = 'calico/compute/felix.conf.erb'
+  $felix_template                   = 'calico/compute/felix.cfg.erb'
   $libvirt_service_default          = 'libvirtd'
 #  $manage_packages                  = false
 #  $manage_repo                      = false
