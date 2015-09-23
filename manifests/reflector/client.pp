@@ -37,7 +37,7 @@ define calico::reflector::client(
       validate_ipv6_address($local_ip)
       validate_ipv6_address($client_ip)
 
-      file { "${calico::bird::bird6conf}/${filename}.conf":
+      file { "${calico::bird::bird6confd}/${filename}.conf":
         ensure  => $ensure,
         content => template($real_template),
       }

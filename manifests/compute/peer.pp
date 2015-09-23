@@ -35,7 +35,7 @@ define calico::compute::peer(
       validate_ipv6_address($local_ip)
       validate_ipv6_address($peer_ip)
 
-      file { "${calico::bird::bird6conf}/${filename}.conf":
+      file { "${calico::bird::bird6confd}/${filename}.conf":
         ensure  => $ensure,
         content => template($real_template),
       }
