@@ -1,7 +1,7 @@
 protocol bgp '<%= @name %>' {
   description "Connection to node <%= @name %>";
   local as <%= @local_as %>;
-  neighbor <%= @client_ip %> as <%= @client_as %>;
+  neighbor <%= @peer_ip %> as <%= @peer_as %>;
   multihop;
   rr client;
   graceful restart;
