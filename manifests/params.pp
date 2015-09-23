@@ -5,6 +5,7 @@
 class calico::params {
   $compute_bird_template            = 'calico/compute/bird.conf.erb'
   $compute_bird6_template           = 'calico/compute/bird6.conf.erb'
+  $compute_manage_bird_config       = true
   $compute_manage_dhcp_agent        = true
   $compute_manage_metadata_service  = true
   $compute_manage_peers             = true
@@ -29,6 +30,7 @@ class calico::params {
   $reflector_bird_template          = 'calico/reflector/bird.conf.erb'
   $reflector_bird6_template         = 'calico/reflector/bird6.conf.erb'
   $reflector_client_template        = 'calico/reflector/client.erb'
+  $reflector_manage_bird_config     = true
   $reflector_manage_clients         = true
   $router_id                        = $ipaddress
   $qemu_conf_default                = '/etc/libvirt/qemu.conf'

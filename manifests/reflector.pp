@@ -1,21 +1,33 @@
 # == Class: calico::reflector
 #
 class calico::reflector (
-  $config_template = undef,
-  $manage_config   = true,
-  $manage_clients  = true,
-  $client_defaults = {},
-  $client_template = undef,
-  $clients         = {},
+  $bird_template           = $calico::reflector_bird_template,
+  $manage_bird_config      = $calico::reflector_manage_bird_config,
+  $manage_clients          = $calico::reflector_manage_clients,
+  $client_defaults         = {},
+  $client_template         = $calico::reflector_peer_template,
+  $clients                 = {},
+  $router_id               = $calico::router_id,
 ) {
 
-  if $manage_config {
-    file { 
+  validate_bool($manage_bird_config)
+  validate_bool($manage_clients)
+  validate_hash($client_defaults)
+  validate_hash($clients)
+  validate_ipv4_address($router_id)
 
-    }
-
+  if $manage_bird_config {
+    contain 'calico::bird'
   }
 
-
+  if $manage_clients {
+    contain 'calico::bird'
+    $client_resources = keys($clients)
+    calico::reflector::clients { $client_resources:
+      client_defaults => $client_defaults,
+      client_template => $client_template,
+      clients         => $clients,
+    }
+  }
 
 }
