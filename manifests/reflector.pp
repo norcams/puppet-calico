@@ -1,13 +1,21 @@
-# == Class: calico::bgp_rr
+# == Class: calico::reflector
 #
 class calico::reflector (
-  $manage_bird = true,
-  $peers       = {},
-) inherits calico::params {
+  $config_template = undef,
+  $manage_config   = true,
+  $manage_clients  = true,
+  $client_defaults = {},
+  $client_template = undef,
+  $clients         = {},
+) {
 
-  if $manage_bird {
-    include 'calico::bird'
-    calico::reflector:peer { $calico::reflector::peers: }
+  if $manage_config {
+    file { 
+
+    }
+
   }
+
+
 
 }

@@ -3,10 +3,9 @@
 # http://docs.projectcalico.org/en/latest/redhat-opens-install.html
 #
 class calico::compute::qemu {
-  include 'calico::params'
 
   augeas { 'qemu_cgroup_device_acl':
-    context   => "/files${qemu_conf}/",
+    context   => "/files${calico::qemu_conf}/",
     changes => [
       "set cgroup_device_acl/1 /dev/null",
       "set cgroup_device_acl/2 /dev/full",
@@ -20,18 +19,19 @@ class calico::compute::qemu {
       "set cgroup_device_acl/10 /dev/hpet",
       "set cgroup_device_acl/11 /dev/net/tun",
     ],
-    onlyif  => "get /files${qemu_conf}/cgroup_device_acl/11 != '/dev/net/tun'",
-    notify  => Service[$libvirt_service]
+    onlyif  => "get /files${calico::qemu_conf}/cgroup_device_acl/11 != '/dev/net/tun'",
+    notify  => Service[$calico::libvirt_service]
   }
 
   augeas { 'qemu_settings':
-    context   => "/files${qemu_conf}/",
+    context   => "/files${calico::qemu_conf}/",
     changes => [
       "set clear_emulator_capabilities 0",
       "set user root",
       "set group root",
     ],
-    notify  => Service[$libvirt_service]
+    notify  => Service[$calico::libvirt_service]
   }
+
 
 }

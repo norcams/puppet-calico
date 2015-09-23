@@ -3,19 +3,32 @@
 # Default parameter values
 #
 class calico::params {
-  $ensure                           = present
-  $enable_ipv4                      = true
-  $enable_ipv6                      = true
-  $manage_packages                  = false
-  $manage_repo                      = false
-  $manage_epel                      = false
+  $compute_bird_template            = 'calico/compute/bird.conf.erb'
+  $compute_bird6_template           = 'calico/compute/bird6.conf.erb'
+  $compute_manage_dhcp_agent        = true
+  $compute_manage_peers             = true
+  $compute_manage_qemu_settings     = true
   $compute_metadata_service_default = 'openstack-nova-metadata-api'
+  $compute_metadata_service_enable  = true
   $compute_metadata_package_default = 'openstack-nova-api'
   $compute_package_default          = 'calico-compute'
+  $compute_peer_tempalte            = 'calico/compute/peer.erb'
+  $compute_service_conf             = '/etc/calico/felix.conf'
   $compute_service_default          = 'calico-felix'
+  $compute_service_enable           = true
   $controller_package_default       = 'calico-control'
   $controller_service_default       = 'neutron-server'
+  $enable_ipv4                      = true
+  $enable_ipv6                      = true
   $libvirt_service_default          = 'libvirtd'
+#  $manage_packages                  = false
+#  $manage_repo                      = false
+#  $manage_epel                      = false
+  $reflector_bird_template          = 'calico/reflector/bird.conf.erb'
+  $reflector_bird6_template         = 'calico/reflector/bird6.conf.erb'
+  $reflector_client_template        = 'calico/reflector/client.erb'
+  $reflector_manage_clients         = true
+  $router_id                        = $ipaddress
   $qemu_conf_default                = '/etc/libvirt/qemu.conf'
   case $::osfamily {
     'Debian' : {
@@ -44,7 +57,7 @@ class calico::params {
       $qemu_conf                = $qemu_conf_default
     }
     default: {
-      validate_re($::osfamily, '^(Debian|RedHat|Archlinux)$', 'Debian or Red Hat based system required.')
+      validate_re($::osfamily, '^(Debian|RedHat)$', 'Debian or Red Hat based system required.')
     }
   }
 

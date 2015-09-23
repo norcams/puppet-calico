@@ -1,7 +1,7 @@
-protocol bgp 'example' {
-  description "<node_ip>";
-  local as <as_number>;
-  neighbor <node_ip> as <as_number>;
+protocol bgp '<%= @name %>' {
+  description "Connection to node <%= @name %>";
+  local as <%= @local_as %>;
+  neighbor <%= @client_ip %> as <%= @client_as %>;
   multihop;
   rr client;
   graceful restart;

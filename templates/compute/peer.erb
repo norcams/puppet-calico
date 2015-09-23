@@ -1,13 +1,12 @@
-protocol bgp 'name' {
-  description "Connection to BGP route reflector 'name'";
-  local as <as>;
-  neighbor <reflector_ip> as <as>;
+protocol bgp '<%= @name %>' {
+  description "Connection to BGP route reflector <%= @name %>";
+  local as <%= @local_as %>;
+  neighbor <%= @peer_ip %> as <%= @peer_as %>;
   multihop;
   import all;
   graceful restart;
   export filter export_bgp;
   next hop self;    # Disable next hop processing and always advertise our
                     # local address as nexthop
-  source address <source ip>;  # The local address we use for the TCP connection
+  source address <%= @local_ip %>;  # The local address we use for the TCP connection
 }
-
