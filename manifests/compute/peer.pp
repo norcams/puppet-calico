@@ -8,8 +8,6 @@ define calico::compute::peer(
   $protocol = 'ipv4',
   $template = undef,
 ) {
-#  include 'calico::bird'
-
   validate_integer($peer_as)
   validate_integer($local_as)
 

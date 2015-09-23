@@ -8,7 +8,6 @@ define calico::reflector::client(
   $protocol   = 'ipv4',
   $template   = undef,
 ) {
-
   validate_integer($client_as)
   validate_integer($local_as)
 

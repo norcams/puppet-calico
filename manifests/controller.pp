@@ -1,14 +1,14 @@
 # == Class: calico
 #
 class calico::controller (
-) inherits calico::params {
+) {
 
-  package { $controller_package:
-    ensure => $ensure,
+  package { $calico::controller_package:
+    ensure => installed,
   }
 
-  # Install the package, then notify the service
-  Package[$controller_package] ~>
-  Service[$controller_service]
+  # Install the package, then notify the neutron service
+  Package[$calico::controller_package] ~>
+  Service[$calico::neutron_service]
 
 }
