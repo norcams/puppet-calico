@@ -6,25 +6,26 @@ class calico::params {
   $compute_bird_template            = 'calico/compute/bird.conf.erb'
   $compute_bird6_template           = 'calico/compute/bird6.conf.erb'
   $compute_manage_dhcp_agent        = true
+  $compute_manage_metadata_service  = true
   $compute_manage_peers             = true
   $compute_manage_qemu_settings     = true
+  $compute_metadata_package_default = 'openstack-nova-api'
   $compute_metadata_service_default = 'openstack-nova-metadata-api'
   $compute_metadata_service_enable  = true
-  $compute_metadata_package_default = 'openstack-nova-api'
   $compute_package_default          = 'calico-compute'
   $compute_peer_tempalte            = 'calico/compute/peer.erb'
-  $compute_service_conf             = '/etc/calico/felix.conf'
-  $compute_service_default          = 'calico-felix'
-  $compute_service_enable           = true
-  $compute_service_template         = 'calico/compute/felix.conf.erb'
   $controller_package_default       = 'calico-control'
-  $controller_service_default       = 'neutron-server'
   $enable_ipv4                      = true
   $enable_ipv6                      = true
+  $felix_conf                       = '/etc/calico/felix.conf'
+  $felix_enable                     = true
+  $felix_service_default            = 'calico-felix'
+  $felix_template                   = 'calico/compute/felix.conf.erb'
   $libvirt_service_default          = 'libvirtd'
 #  $manage_packages                  = false
 #  $manage_repo                      = false
 #  $manage_epel                      = false
+  $neutron_service_default          = 'neutron-server'
   $reflector_bird_template          = 'calico/reflector/bird.conf.erb'
   $reflector_bird6_template         = 'calico/reflector/bird6.conf.erb'
   $reflector_client_template        = 'calico/reflector/client.erb'
@@ -38,10 +39,10 @@ class calico::params {
           $compute_metadata_service = $compute_metadata_service_default
           $compute_metadata_package = $compute_metadata_package_default
           $compute_package          = $compute_package_default
-          $compute_service          = $compute_service_default
           $controller_package       = $controller_package_default
-          $controller_service       = $controller_service_default
+          $felix_service            = $felix_service_default
           $libvirt_service          = $libvirt_service_default
+          $neutron_service          = $neutron_service_default
           $qemu_conf                = $qemu_conf_default
         }
       }
@@ -51,10 +52,10 @@ class calico::params {
       $compute_metadata_service = $compute_metadata_service_default
       $compute_metadata_package = $compute_metadata_package_default
       $compute_package          = $compute_package_default
-      $compute_service          = $compute_service_default
       $controller_package       = $controller_package_default
-      $controller_service       = $controller_service_default
+      $felix_service            = $felix_service_default
       $libvirt_service          = $libvirt_service_default
+      $neutron_service          = $neutron_service_default
       $qemu_conf                = $qemu_conf_default
     }
     default: {

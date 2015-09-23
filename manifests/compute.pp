@@ -1,17 +1,19 @@
 # == Class: calico
 #
 class calico::compute (
-  $compute_bird_template           = $calico::compute_bird_template,
-  $compute_metadata_service_enable = $calico::compute_metadata_service_enable,
-  $compute_service_enable          = $calico::compute_service_enable,
-  $compute_service_template        = $calico::compute_service_template,
-  $manage_dhcp_agent               = $calico::compute_manage_dhcp_agent,
-  $manage_peers                    = $calico::compute_manage_peers,
-  $manage_qemu_settings            = $calico::compute_manage_qemu_settings,
-  $peer_defaults                   = {},
-  $peer_template                   = $calico::compute_peer_template,
-  $peers                           = {},
-  $router_id                       = $calico::router_id,
+  $bird_template           = $calico::compute_bird_template,
+  $felix_enable            = $calico::felix_enable,
+  $felix_template          = $calico::felix_template,
+  $metadata_service_enable = $calico::compute_metadata_service_enable,
+  $manage_bird_config      = $calico::compute_manage_bird_config,
+  $manage_dhcp_agent       = $calico::compute_manage_dhcp_agent,
+  $manage_metadata_service = $calico::compute_manage_metadata_service,
+  $manage_peers            = $calico::compute_manage_peers,
+  $manage_qemu_settings    = $calico::compute_manage_qemu_settings,
+  $peer_defaults           = {},
+  $peer_template           = $calico::compute_peer_template,
+  $peers                   = {},
+  $router_id               = $calico::router_id,
 ) {
 
   validate_bool($manage_dhcp_agent)
@@ -25,31 +27,35 @@ class calico::compute (
     ensure => installed,
   }
 
-  file { $calico::compute_service_conf:
+  file { $calico::felix_conf:
     ensure  => present,
-    content => template($calico::compute_service_template)
+    content => template($felix_template)
   }
 
-  service { $calico::compute_service:
+  service { $calico::felix_service:
     ensure => running,
-    enable => $calico::compute_service_enable,
+    enable => $felix_enable,
   }
 
   Package[$calico::compute_package] ->
-  File[$calico::compute_service_conf] ~>
-  Service[$calico::compute_service]
+  File[$calico::felix_conf] ~>
+  Service[$calico::felix_service]
 
-  package { $calico::compute_metadata_package:
-    ensure => installed,
+  if $manage_metadata_service {
+    package { $calico::compute_metadata_package:
+       ensure => installed,
+    }
+    service { $calico::compute_metadata_service:
+      ensure => running,
+      enable => $calico::compute_metadata_service_enable,
+    }
+    Package[$calico::compute_metadata_package] ~>
+    Service[$calico::compute_metadata_service]
   }
 
-  service { $calico::compute_metadata_service:
-    ensure => running,
-    enable => $calico::compute_metadata_service_enable,
+  if $manage_bird_config {
+    contain 'calico::bird'
   }
-
-  Package[$calico::compute_metadata_package] ~>
-  Service[$calico::compute_metadata_service]
 
   if $manage_peers {
     contain 'calico::bird'
