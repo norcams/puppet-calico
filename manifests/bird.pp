@@ -5,8 +5,11 @@ class calico::bird {
   $birdconfd = '/etc/bird/bird.conf.d'
   $bird6confd = '/etc/bird/bird6.conf.d'
 
+  file { '/etc/bird':
+    ensure => directory,
+  }
 
-  # Set bird config template according to role if enabled
+  # Select bird config templates according to enabled role
   if $calico::compute_manage_bird_config {
     $bird_template  = $calico::compute_bird_template
     $bird6_template = $calico::compute_bird6_template
@@ -16,37 +19,33 @@ class calico::bird {
   }
 
   # Manage bird.conf and bird6.conf
+  #
+  # Note: bird will fail if the path in the 'include' statement does
+  #       not exist when the service starts
+  #
   if $calico::compute_manage_bird_config or $calico::reflector_manage_bird_config {
-    if $calico::enable_ipv4 {
-      file { $bird::params::config_path_v4:
-        ensure  => present,
-        content => template($bird_template),
-        notify => Service[$bird::params::daemon_name_v4],
-      }
-    }
-    if $calico::enable_ipv6 {
-      file { $bird::params::config_path_v6:
-        ensure  => present,
-        content => template($bird6_template),
-        notify => Service[$bird::params::daemon_name_v6],
-      }
-    }
-  }
-
-  # Set up include dirs if we manage compute peers or reflector clients
-  if $calico::compute_manage_peers or $calico::reflector_manage_clients {
-    file { '/etc/bird':
-      ensure => directory,
-    }
     if $calico::enable_ipv4 {
       file { $birdconfd:
         ensure => directory,
       }
+      file { $bird::params::config_path_v4:
+        ensure  => present,
+        content => template($bird_template),
+      }
+      File[$birdconfd] -> File[$bird::params::config_path_v4] ~>
+      Service[$bird::params::daemon_name_v4]
     }
     if $calico::enable_ipv6 {
       file { $bird6confd:
         ensure => directory,
       }
+      file { $bird::params::config_path_v6:
+        ensure  => present,
+        content => template($bird6_template),
+        notify => Service[$bird::params::daemon_name_v6],
+      }
+      File[$bird6confd] -> File[$bird::params::config_path_v6] ~>
+      Service[$bird::params::daemon_name_v6]
     }
   }
 
