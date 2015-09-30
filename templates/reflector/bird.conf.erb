@@ -12,8 +12,8 @@ filter import_kernel {
   reject;
 }
 
-# Turn on global debugging of all protocols
-debug protocols all;
+<% if @debug %># Turn on global debugging of all protocols
+debug protocols all;<% end -%>
 
 # This pseudo-protocol watches all interface up/down events.
 protocol device {
