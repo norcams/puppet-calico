@@ -6,6 +6,7 @@ class calico (
   $enable_ipv4 = $calico::params::enable_ipv4,
   $enable_ipv6 = $calico::params::enable_ipv6,
   $reflector   = false,
+  $debug       = false,
 ) inherits calico::params {
 
   validate_bool($compute)

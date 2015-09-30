@@ -1,6 +1,7 @@
 
-router id 1.1.1.1;
+router id <%= @router_id %>;
 
+<% if @debug %>debug protocols all;<% end -%>
 # We are only going to export routes from Calico interfaces.
 # Currently, 'tap*' is used by the OpenStack implimentation
 # and 'cali*' is used by the docker implimentation.
