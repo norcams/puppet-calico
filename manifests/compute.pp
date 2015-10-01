@@ -9,6 +9,7 @@ class calico::compute (
   $manage_dhcp_agent       = $calico::compute_manage_dhcp_agent,
   $manage_metadata_service = $calico::compute_manage_metadata_service,
   $manage_peers            = $calico::compute_manage_peers,
+  $manage_sysctl_settings  = $calico::compute_manage_sysctl_settings,
   $manage_qemu_settings    = $calico::compute_manage_qemu_settings,
   $peer_defaults           = {},
   $peer_template           = $calico::compute_peer_template,
@@ -22,12 +23,14 @@ class calico::compute (
   validate_bool($manage_dhcp_agent)
   validate_bool($manage_metadata_service)
   validate_bool($manage_peers)
+  validate_bool($manage_sysctl_settings)
   validate_bool($manage_qemu_settings)
   validate_hash($peer_defaults)
   validate_hash($peers)
   validate_ipv4_address($router_id)
 
   if $manage_dhcp_agent { include 'neutron::agents::dhcp' }
+  if $manage_sysctl_settings { include 'calico::compute::sysctl' }
   if $manage_qemu_settings { include 'calico::compute::qemu' }
 
   package { $calico::compute_package:

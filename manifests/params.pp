@@ -9,6 +9,7 @@ class calico::params {
   $compute_manage_dhcp_agent        = true
   $compute_manage_metadata_service  = true
   $compute_manage_peers             = true
+  $compute_manage_sysctl_settings   = true
   $compute_manage_qemu_settings     = true
   $compute_metadata_package_default = 'openstack-nova-api'
   $compute_metadata_service_default = 'openstack-nova-metadata-api'
