@@ -2,6 +2,8 @@
 #
 class calico::compute (
   $bird_template           = $calico::compute_bird_template,
+  $etcd_host               = $calico::compute_etcd_host,
+  $etcd_port               = $calico::compute_etcd_port,
   $felix_enable            = $calico::felix_enable,
   $felix_template          = $calico::felix_template,
   $metadata_service_enable = $calico::compute_metadata_service_enable,

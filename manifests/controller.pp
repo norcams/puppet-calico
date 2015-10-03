@@ -1,11 +1,14 @@
 # == Class: calico
 #
 class calico::controller (
+  $etcd_host = $calico::controller_etcd_host,
+  $etcd_port = $calico::controller_etcd_port,
 ) {
 
+  # Add calico-specific config to neutron.conf
   neutron_config {
-    'calico/etcd_host': value => $calico::controller_etcd_host;
-    'calico/etcd_port': value => $calico::controller_etcd_port;
+    'calico/etcd_host': value => $etcd_host;
+    'calico/etcd_port': value => $etcd_port;
   }
 
   package { $calico::controller_package:
