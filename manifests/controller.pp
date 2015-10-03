@@ -3,6 +3,11 @@
 class calico::controller (
 ) {
 
+  neutron_config {
+    'calico/etcd_host': value => $calico::controller_etcd_host;
+    'calico/etcd_port': value => $calico::controller_etcd_port;
+  }
+
   package { $calico::controller_package:
     ensure => installed,
   }

@@ -5,6 +5,8 @@
 class calico::params {
   $compute_bird_template            = 'calico/compute/bird.conf.erb'
   $compute_bird6_template           = 'calico/compute/bird6.conf.erb'
+  $compute_etcd_host                = '127.0.0.1'
+  $compute_etcd_port                = '4001'
   $compute_manage_bird_config       = true
   $compute_manage_dhcp_agent        = true
   $compute_manage_metadata_service  = true
@@ -16,6 +18,8 @@ class calico::params {
   $compute_metadata_service_enable  = true
   $compute_package_default          = 'calico-compute'
   $compute_peer_template            = 'calico/compute/peer.erb'
+  $controller_etcd_host             = '127.0.0.1'
+  $controller_etcd_port             = '4001'
   $controller_package_default       = 'calico-control'
   $enable_ipv4                      = true
   $enable_ipv6                      = true
