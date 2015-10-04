@@ -1,8 +1,10 @@
 # == Class: calico
 #
 class calico::controller (
-  $etcd_host = $calico::controller_etcd_host,
-  $etcd_port = $calico::controller_etcd_port,
+  $controller_package        = $calico::controller_package,
+  $controller_package_ensure = $calico::controller_package_ensure,
+  $etcd_host                 = $calico::controller_etcd_host,
+  $etcd_port                 = $calico::controller_etcd_port,
 ) {
 
   # Add calico-specific config to neutron.conf
@@ -11,8 +13,8 @@ class calico::controller (
     'calico/etcd_port': value => $etcd_port;
   }
 
-  package { $calico::controller_package:
-    ensure => installed,
+  package { $controller_package:
+    ensure => $controller_package_ensure,
   }
 
   # Install the package, then notify the neutron service

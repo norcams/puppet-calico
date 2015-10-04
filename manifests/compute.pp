@@ -2,6 +2,8 @@
 #
 class calico::compute (
   $bird_template           = $calico::compute_bird_template,
+  $compute_package         = $calico::compute_package,
+  $compute_package_ensure  = $calico::compute_package_ensure,
   $etcd_host               = $calico::compute_etcd_host,
   $etcd_port               = $calico::compute_etcd_port,
   $felix_enable            = $calico::felix_enable,
@@ -35,8 +37,8 @@ class calico::compute (
   if $manage_sysctl_settings { include 'calico::compute::sysctl' }
   if $manage_qemu_settings { include 'calico::compute::qemu' }
 
-  package { $calico::compute_package:
-    ensure => installed,
+  package { $compute_package:
+    ensure => $compute_package_ensure,
   }
 
   file { $calico::felix_conf:
@@ -49,6 +51,7 @@ class calico::compute (
     enable => $felix_enable,
   }
 
+  Class['neutron'] ->
   Package[$calico::compute_package] ->
   File[$calico::felix_conf] ~>
   Service[$calico::felix_service]

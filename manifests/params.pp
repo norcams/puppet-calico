@@ -17,10 +17,12 @@ class calico::params {
   $compute_metadata_service_default = 'openstack-nova-metadata-api'
   $compute_metadata_service_enable  = true
   $compute_package_default          = 'calico-compute'
+  $compute_package_ensure           = 'installed'
   $compute_peer_template            = 'calico/compute/peer.erb'
   $controller_etcd_host             = '127.0.0.1'
   $controller_etcd_port             = '4001'
   $controller_package_default       = 'calico-control'
+  $controller_package_ensure        = 'installed'
   $enable_ipv4                      = true
   $enable_ipv6                      = true
   $felix_conf                       = '/etc/calico/felix.cfg'
