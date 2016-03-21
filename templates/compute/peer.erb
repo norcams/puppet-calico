@@ -5,6 +5,7 @@ protocol bgp '<%= @name %>' {
   multihop;
   import all;
   graceful restart;
+  default bgp_local_pref <%= @local_pref %>;
   export filter export_bgp;
   next hop self;    # Disable next hop processing and always advertise our
                     # local address as nexthop
