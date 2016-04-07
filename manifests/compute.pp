@@ -37,24 +37,26 @@ class calico::compute (
   if $manage_sysctl_settings { include 'calico::compute::sysctl' }
   if $manage_qemu_settings { include 'calico::compute::qemu' }
 
-  package { $compute_package:
-    ensure => $compute_package_ensure,
-  }
+  if $calico::compute {
+    package { $compute_package:
+      ensure => $compute_package_ensure,
+    }
 
-  file { $calico::felix_conf:
-    ensure  => present,
-    content => template($felix_template)
-  }
+    file { $calico::felix_conf:
+      ensure  => present,
+      content => template($felix_template)
+    }
 
-  service { $calico::felix_service:
-    ensure => running,
-    enable => $felix_enable,
-  }
+    service { $calico::felix_service:
+      ensure => running,
+      enable => $felix_enable,
+    }
 
-  Class['neutron'] ->
-  Package[$calico::compute_package] ->
-  File[$calico::felix_conf] ~>
-  Service[$calico::felix_service]
+    Class['neutron'] ->
+    Package[$calico::compute_package] ->
+    File[$calico::felix_conf] ~>
+    Service[$calico::felix_service]
+  }
 
   if $manage_metadata_service {
     package { $calico::compute_metadata_package:
