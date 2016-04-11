@@ -11,11 +11,11 @@ class calico::bird {
 
   # Select bird config templates according to enabled role
   if $calico::compute_manage_bird_config {
-    $bird_template  = $calico::compute_bird_template
-    $bird6_template = $calico::compute_bird6_template
+    $bird_template  = $calico::compute::bird_template
+    $bird6_template = $calico::compute::bird6_template
   } elsif $calico::reflector_manage_bird_config {
-    $bird_template  = $calico::reflector_bird_template
-    $bird6_template = $calico::reflector_bird6_template
+    $bird_template  = $calico::reflector::bird_template
+    $bird6_template = $calico::reflector::bird6_template
   }
 
   # Manage bird.conf and bird6.conf

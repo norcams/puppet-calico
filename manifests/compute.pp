@@ -2,6 +2,7 @@
 #
 class calico::compute (
   $bird_template           = $calico::compute_bird_template,
+  $bird6_template           = $calico::compute_bird6_template,
   $compute_package         = $calico::compute_package,
   $compute_package_ensure  = $calico::compute_package_ensure,
   $etcd_host               = $calico::compute_etcd_host,
