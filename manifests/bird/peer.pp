@@ -5,6 +5,7 @@ define calico::bird::peer(
   $local_ip = $ipaddress,
   $peer_as  = 65535,
   $peer_ip,
+  $local_pref = undef,
   $protocol = 'ipv4',
   $template,
 ) {

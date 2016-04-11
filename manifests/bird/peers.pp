@@ -16,6 +16,7 @@ define calico::bird::peers(
       peer_as  => $peer['peer_as'],
       local_as => $peer['local_as'],
       local_ip => $peer['local_ipv4'],
+      local_pref => $peer['local_pref'],
       template => $peer_template,
     }
   }
