@@ -2,6 +2,7 @@
 #
 class calico::reflector (
   $bird_template           = $calico::reflector_bird_template,
+  $bird6_template          = $calico::reflector_bird6_template,
   $manage_bird_config      = $calico::reflector_manage_bird_config,
   $manage_clients          = $calico::reflector_manage_clients,
   $client_defaults         = {},
