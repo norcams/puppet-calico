@@ -10,10 +10,10 @@ class calico::bird {
   }
 
   # Select bird config templates according to enabled role
-  if $calico::compute_manage_bird_config {
+  if $calico::compute::manage_bird_config {
     $bird_template  = $calico::compute::bird_template
     $bird6_template = $calico::compute::bird6_template
-  } elsif $calico::reflector_manage_bird_config {
+  } elsif $calico::reflector::manage_bird_config {
     $bird_template  = $calico::reflector::bird_template
     $bird6_template = $calico::reflector::bird6_template
   }
@@ -23,7 +23,7 @@ class calico::bird {
   # Note: bird will fail if the path in the 'include' statement does
   #       not exist when the service starts
   #
-  if $calico::compute_manage_bird_config or $calico::reflector_manage_bird_config {
+  if $calico::compute::manage_bird_config or $calico::reflector::manage_bird_config {
     if $calico::enable_ipv4 {
       file { $birdconfd:
         ensure => directory,
