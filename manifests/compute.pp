@@ -5,6 +5,7 @@ class calico::compute (
   $bird6_template          = $calico::compute_bird6_template,
   $compute_package         = $calico::compute_package,
   $compute_package_ensure  = $calico::compute_package_ensure,
+  $compute_dhcp_agent      = $calico::compute_dhcp_agent,
   $etcd_host               = $calico::compute_etcd_host,
   $etcd_port               = $calico::compute_etcd_port,
   $felix_enable            = $calico::felix_enable,
@@ -34,7 +35,6 @@ class calico::compute (
   validate_hash($peers)
   validate_ipv4_address($router_id)
 
-  if $manage_dhcp_agent { include 'neutron::agents::dhcp' }
   if $manage_sysctl_settings { include 'calico::compute::sysctl' }
   if $manage_qemu_settings { include 'calico::compute::qemu' }
 
@@ -57,6 +57,19 @@ class calico::compute (
     Package[$calico::compute_package] ->
     File[$calico::felix_conf] ~>
     Service[$calico::felix_service]
+  }
+
+  if $manage_dhcp_agent {
+    case $compute_dhcp_agent {
+      'neutron': {
+        include neutron::agents::dhcp
+      }
+      'calico': {
+        package { 'calico-dhcp-agent':
+          ensure => installed,
+        }
+      }
+    }
   }
 
   if $manage_metadata_service {
