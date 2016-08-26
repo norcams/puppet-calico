@@ -68,6 +68,12 @@ class calico::compute (
         package { 'calico-dhcp-agent':
           ensure => installed,
         }
+        service { 'calico-dhcp-agent':
+          enable      => true,
+          ensure      => running,
+          hasrestart  => true,
+          hasstatus   => true,
+        }
       }
     }
   }
