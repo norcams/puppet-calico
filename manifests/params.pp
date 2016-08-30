@@ -5,6 +5,7 @@
 class calico::params {
   $compute_bird_template            = 'calico/compute/bird.conf.erb'
   $compute_bird6_template           = 'calico/compute/bird6.conf.erb'
+  $compute_dhcp_agent               = 'neutron'
   $compute_etcd_host                = '127.0.0.1'
   $compute_etcd_port                = '4001'
   $compute_manage_bird_config       = true
