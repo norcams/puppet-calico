@@ -56,7 +56,8 @@ class calico::compute (
     Class['neutron'] ->
     Package[$calico::compute_package] ->
     File[$calico::felix_conf] ~>
-    Service[$calico::felix_service]
+    Service[$calico::felix_service] ~>
+    Service[$calico::compute_metadata_service]
   }
 
   if $manage_dhcp_agent {
