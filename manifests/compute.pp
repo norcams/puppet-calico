@@ -56,8 +56,7 @@ class calico::compute (
     Class['neutron'] ->
     Package[$calico::compute_package] ->
     File[$calico::felix_conf] ~>
-    Service[$calico::felix_service] ~>
-    Service[$calico::compute_metadata_service]
+    Service[$calico::felix_service]
   }
 
   if $manage_dhcp_agent {
@@ -84,8 +83,9 @@ class calico::compute (
        ensure => installed,
     }
     service { $calico::compute_metadata_service:
-      ensure => running,
-      enable => $calico::compute_metadata_service_enable,
+      ensure  => running,
+      enable  => $calico::compute_metadata_service_enable,
+      require => Service[$calico::felix_service],
     }
     Package[$calico::compute_metadata_package] ~>
     Service[$calico::compute_metadata_service]
