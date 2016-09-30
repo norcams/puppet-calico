@@ -31,6 +31,7 @@ class calico::bird {
       file { $bird::params::config_path_v4:
         ensure  => present,
         content => template($bird_template),
+        notify => Service[$bird::params::daemon_name_v4],
       }
       File[$birdconfd] -> File[$bird::params::config_path_v4] ~>
       Service[$bird::params::daemon_name_v4]
