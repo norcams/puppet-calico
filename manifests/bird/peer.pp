@@ -1,12 +1,14 @@
 #
 define calico::bird::peer(
-  $ensure   = 'present',
-  $local_as = 65535,
-  $local_ip = $ipaddress,
-  $peer_as  = 65535,
+  $ensure     = 'present',
+  $local_as   = 65535,
+  $local_ip   = $ipaddress,
+  $local_ipv6 = $ipaddress6,
+  $peer_as    = 65535,
   $peer_ip,
+  $peer_ipv6  = undef,
   $local_pref = undef,
-  $protocol = 'ipv4',
+  $protocol   = 'ipv4',
   $template,
 ) {
   validate_integer($peer_as)
