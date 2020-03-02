@@ -40,7 +40,7 @@ class calico::params {
   $reflector_client_template        = 'calico/reflector/client.erb'
   $reflector_manage_bird_config     = true
   $reflector_manage_clients         = true
-  $router_id                        = $ipaddress
+  $router_id                        = fact('ipaddress')
   $qemu_conf_default                = '/etc/libvirt/qemu.conf'
   case $::osfamily {
     'Debian' : {

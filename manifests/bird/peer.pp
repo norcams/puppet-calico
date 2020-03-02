@@ -2,8 +2,8 @@
 define calico::bird::peer(
   $ensure     = 'present',
   $local_as   = 65535,
-  $local_ip   = $ipaddress,
-  $local_ipv6 = $ipaddress6,
+  $local_ip   = fact('ipaddress'),
+  $local_ipv6 = fact('ipaddress6'),
   $peer_as    = 65535,
   $peer_ip,
   $peer_ipv6  = undef,
