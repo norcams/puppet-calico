@@ -30,6 +30,9 @@ class calico::params {
   $felix_enable                     = true
   $felix_service_default            = 'calico-felix'
   $felix_template                   = 'calico/compute/felix.cfg.erb'
+  $felix_vxlan_port                 = undef,
+  $felix_os_region                  = undef,
+  $felix_etcd_endpoints             = 'http://127.0.0.1:23790',
   $libvirt_service_default          = 'libvirtd'
 #  $manage_packages                  = false
 #  $manage_repo                      = false
