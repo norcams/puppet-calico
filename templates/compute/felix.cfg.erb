@@ -1,4 +1,6 @@
 [global]
 DatastoreType = etcdv3
-EtcdAddr = 127.0.0.1:23790
+EtcdEndpoints = <%= @felix_etcd_endpoints %>
+<% if @felix_vxlan_port -%>VXLANPort =<%= @felix_vxlan_port %><% end %>
+<% if @felix_os_region -%>OpenstackRegion =<%= @felix_os_region %><% end %>
 #FelixHostname = hostname
