@@ -61,7 +61,6 @@ class calico::params {
       }
     }
     'RedHat' : {
-      validate_re($::operatingsystemmajrelease, '^7$', 'A 7.x Red Hat based system is required.')
       $compute_metadata_service = $compute_metadata_service_default
       $compute_metadata_package = $compute_metadata_package_default
       $compute_package          = $compute_package_default
