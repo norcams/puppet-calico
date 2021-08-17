@@ -22,6 +22,7 @@ class calico::compute (
   $manage_qemu_settings    = $calico::compute_manage_qemu_settings,
   $peer_defaults           = {},
   $peer_template           = $calico::compute_peer_template,
+  $peer6_template          = $calico::compute_peer6_template,
   $peers                   = {},
   $router_id               = $calico::router_id,
 ) {
@@ -102,9 +103,10 @@ class calico::compute (
     contain 'calico::bird'
     $peer_resources = keys($peers)
     calico::bird::peers { $peer_resources:
-      peer_defaults => $peer_defaults,
-      peer_template => $peer_template,
-      peers         => $peers,
+      peer_defaults  => $peer_defaults,
+      peer_template  => $peer_template,
+      peer6_template => $peer6_template,
+      peers          => $peers,
     }
   }
 

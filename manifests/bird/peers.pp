@@ -2,6 +2,7 @@
 define calico::bird::peers(
   $peer_defaults,
   $peer_template,
+  $peer6_template,
   $peers,
 ) {
   validate_hash($peer_defaults)
@@ -29,7 +30,7 @@ define calico::bird::peers(
       local_as => $peer['local_as'],
       local_ip => $peer['local_ipv6'],
       local_pref => $peer['local_pref'],
-      template => $peer_template,
+      template => $peer6_template,
     }
   }
 

@@ -20,6 +20,7 @@ class calico::params {
   $compute_package_default          = 'calico-compute'
   $compute_package_ensure           = 'installed'
   $compute_peer_template            = 'calico/compute/peer.erb'
+  $compute_peer6_template           = 'calico/compute/peer.erb'
   $controller_etcd_host             = '127.0.0.1'
   $controller_etcd_port             = '4001'
   $controller_package_default       = 'calico-control'
