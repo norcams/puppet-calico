@@ -3,7 +3,7 @@ class calico::bird(
   $debug     = $calico::debug,
   $router_id = $calico::router_id
 ) {
-  include 'bird::params'
+  include 'bird:'
 
   $birdconfd = '/etc/bird/bird.conf.d'
   $bird6confd = '/etc/bird/bird6.conf.d'
@@ -31,25 +31,25 @@ class calico::bird(
       file { $birdconfd:
         ensure => directory,
       }
-      file { $bird::params::config_path_v4:
+      file { $bird::config_path_v4:
         ensure  => present,
         content => template($bird_template),
-        notify => Service[$bird::params::daemon_name_v4],
+        notify => Service[$bird::daemon_name_v4],
       }
-      File[$birdconfd] -> File[$bird::params::config_path_v4] ~>
-      Service[$bird::params::daemon_name_v4]
+      File[$birdconfd] -> File[$bird::config_path_v4] ~>
+      Service[$bird::daemon_name_v4]
     }
     if $calico::enable_ipv6 {
       file { $bird6confd:
         ensure => directory,
       }
-      file { $bird::params::config_path_v6:
+      file { $bird::config_path_v6:
         ensure  => present,
         content => template($bird6_template),
-        notify => Service[$bird::params::daemon_name_v6],
+        notify => Service[$bird::daemon_name_v6],
       }
-      File[$bird6confd] -> File[$bird::params::config_path_v6] ~>
-      Service[$bird::params::daemon_name_v6]
+      File[$bird6confd] -> File[$bird::config_path_v6] ~>
+      Service[$bird::daemon_name_v6]
     }
   }
 

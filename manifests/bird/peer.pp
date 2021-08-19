@@ -16,10 +16,10 @@ define calico::bird::peer(
 
   # For newer el releases the daemon name is the same
   if ($::osfamily == 'RedHat') and ($::operatingsystemmajrelease >= '8') {
-    $daemon_name_v6 = $bird::params::daemon_name_v4
+    $daemon_name_v6 = $bird::daemon_name_v4
   }
   else {
-    $daemon_name_v6 = $bird::params::daemon_name_v6
+    $daemon_name_v6 = $bird::daemon_name_v6
   }
 
   # Remove dots in filename
@@ -33,7 +33,7 @@ define calico::bird::peer(
       file { "${calico::bird::birdconfd}/${filename}.conf":
         ensure  => $ensure,
         content => template($template),
-        notify  => Service[$bird::params::daemon_name_v4],
+        notify  => Service[$bird::daemon_name_v4],
       }
     }
     /(?i-mx:ipv6)/: {
