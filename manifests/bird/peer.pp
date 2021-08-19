@@ -14,6 +14,14 @@ define calico::bird::peer(
   validate_integer($peer_as)
   validate_integer($local_as)
 
+  # For newer el releases the daemon name is the same
+  if ($::osfamily == 'RedHat') and ($::operatingsystemmajrelease >= '8') {
+    $daemon_name_v6 = $bird::params::daemon_name_v4
+  }
+  else {
+    $daemon_name_v6 = $bird::params::daemon_name_v6
+  }
+
   # Remove dots in filename
   $filename = regsubst($name, '\.', '_', 'G')
 
@@ -35,7 +43,7 @@ define calico::bird::peer(
       file { "${calico::bird::bird6confd}/${filename}.conf":
         ensure  => $ensure,
         content => template($template),
-        notify  => Service[$bird::params::daemon_name_v6],
+        notify  => Service[$daemon_name_v6],
       }
     }
     default: { fail("Invalid ip protocol: $protocol") }
