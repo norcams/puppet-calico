@@ -3,7 +3,7 @@ class calico::bird(
   $debug     = $calico::debug,
   $router_id = $calico::router_id
 ) {
-  include 'bird:'
+  include 'bird'
 
   $birdconfd = '/etc/bird/bird.conf.d'
   $bird6confd = '/etc/bird/bird6.conf.d'
