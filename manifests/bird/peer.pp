@@ -40,13 +40,21 @@ define calico::bird::peer(
       validate_ipv6_address($local_ip)
       validate_ipv6_address($peer_ip)
 
-      file { "${calico::bird::bird6confd}/${filename}.conf":
-        ensure  => $ensure,
-        content => template($template),
-        notify  => Service[$daemon_name_v6],
+      if ($::osfamily == 'RedHat') and ($::operatingsystemmajrelease == '7') {
+        file { "${calico::bird::bird6confd}/${filename}.conf":
+          ensure  => $ensure,
+          content => template($template),
+          notify  => Service[$daemon_name_v6],
+        }
+      }
+      if ($::osfamily == 'RedHat') and ($::operatingsystemmajrelease >= '8') {
+        file { "${calico::bird::birdconfd}/${filename}.conf":
+          ensure  => $ensure,
+          content => template($template),
+          notify  => Service[$bird::daemon_name_v4],
+        }
       }
     }
     default: { fail("Invalid ip protocol: $protocol") }
   }
-
 }
