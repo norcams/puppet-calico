@@ -9,10 +9,6 @@ class calico (
   $debug       = false,
 ) inherits calico::params {
 
-  validate_bool($compute)
-  validate_bool($controller)
-  validate_bool($reflector)
-
   validate_legacy(Boolean, 'validate_bool', $compute)
   validate_legacy(Boolean, 'validate_bool', $controller)
   validate_legacy(Boolean, 'validate_bool', $reflector)
