@@ -13,6 +13,10 @@ class calico (
   validate_bool($controller)
   validate_bool($reflector)
 
+  validate_legacy(Boolean, 'validate_bool', $compute)
+  validate_legacy(Boolean, 'validate_bool', $controller)
+  validate_legacy(Boolean, 'validate_bool', $reflector)
+
   if $compute and $controller {
     fail("Enabling compute and controller on a single node is not supported (yet?)")
   }

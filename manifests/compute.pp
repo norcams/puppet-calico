@@ -27,17 +27,17 @@ class calico::compute (
   $router_id               = $calico::router_id,
 ) {
 
-  validate_bool($felix_enable)
-  validate_bool($metadata_service_enable)
-  validate_bool($manage_bird_config)
-  validate_bool($manage_dhcp_agent)
-  validate_bool($manage_metadata_service)
-  validate_bool($manage_peers)
-  validate_bool($manage_sysctl_settings)
-  validate_bool($manage_qemu_settings)
-  validate_hash($peer_defaults)
-  validate_hash($peers)
-  validate_ipv4_address($router_id)
+  validate_legacy(Boolean, 'validate_bool', $felix_enable)
+  validate_legacy(Boolean, 'validate_bool', $metadata_service_enable)
+  validate_legacy(Boolean, 'validate_bool', $manage_bird_config)
+  validate_legacy(Boolean, 'validate_bool', $manage_dhcp_agent)
+  validate_legacy(Boolean, 'validate_bool', $manage_metadata_service)
+  validate_legacy(Boolean, 'validate_bool', $manage_peers)
+  validate_legacy(Boolean, 'validate_bool', $manage_sysctl_settings)
+  validate_legacy(Boolean, 'validate_bool', $manage_qemu_settings)
+  validate_legacy(Hash, 'validate_hash', $peer_defaults)
+  validate_legacy(Hash, 'validate_hash', $peers)
+  validate_legacy(Numeric, 'validate_ipv4_address', $router_id)
 
   if $manage_sysctl_settings { include 'calico::compute::sysctl' }
   if $manage_qemu_settings { include 'calico::compute::qemu' }

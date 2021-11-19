@@ -5,8 +5,8 @@ define calico::bird::peers(
   $peer6_template,
   $peers,
 ) {
-  validate_hash($peer_defaults)
-  validate_hash($peers)
+  validate_legacy(Hash, 'validate_hash', $peer_defaults)
+  validate_legacy(Hash, 'validate_hash', $peers)
 
   $peer = deep_merge($peer_defaults, $peers[$name])
 

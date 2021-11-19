@@ -11,11 +11,11 @@ class calico::reflector (
   $router_id               = $calico::router_id,
 ) {
 
-  validate_bool($manage_bird_config)
-  validate_bool($manage_clients)
-  validate_hash($client_defaults)
-  validate_hash($clients)
-  validate_ipv4_address($router_id)
+  validate_legacy(Boolean, 'validate_bool', $manage_bird_config)
+  validate_legacy(Boolean, 'validate_bool', $manage_clients)
+  validate_legacy(Hash, 'validate_hash', $client_defaults)
+  validate_legacy(Hash, 'validate_hash', $clients)
+  validate_legacy(Numeric, 'validate_ipv4_address', $router_id)
 
   if $manage_bird_config {
     contain 'calico::bird'

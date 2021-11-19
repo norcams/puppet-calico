@@ -27,8 +27,8 @@ define calico::bird::peer(
 
   case $protocol {
     /(?i-mx:ipv4)/: {
-      validate_ipv4_address($local_ip)
-      validate_ipv4_address($peer_ip)
+      validate_legacy(Numeric, 'validate_ipv4_address', $local_ip)
+      validate_legacy(Numeric, 'validate_ipv4_address', $peer_ip)
 
       file { "${calico::bird::birdconfd}/${filename}.conf":
         ensure  => $ensure,
@@ -37,8 +37,9 @@ define calico::bird::peer(
       }
     }
     /(?i-mx:ipv6)/: {
-      validate_ipv6_address($local_ip)
-      validate_ipv6_address($peer_ip)
+      validate_legacy(Numeric, 'validate_ipv6_address', $local_ip)
+      validate_legacy(Numeric, 'validate_ipv6_address', $peer_ip)
+
 
       if ($::osfamily == 'RedHat') and ($::operatingsystemmajrelease == '7') {
         file { "${calico::bird::bird6confd}/${filename}.conf":

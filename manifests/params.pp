@@ -72,9 +72,7 @@ class calico::params {
       $qemu_conf                = $qemu_conf_default
     }
     default: {
-      validate_re($::osfamily, '^(Debian|RedHat)$', 'Debian or Red Hat based system required.')
+      validate_legacy(String, 'validate_re', $::osfamily, '^(Debian|RedHat)$', 'Debian or Red Hat based system required.')
     }
   }
-
-
 }
