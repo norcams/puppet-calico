@@ -3,4 +3,5 @@ DatastoreType = etcdv3
 EtcdEndpoints = <%= @felix_etcd_endpoints %>
 <% if @felix_vxlan_port -%>VXLANPort =<%= @felix_vxlan_port %><% end %>
 <% if @felix_os_region -%>OpenstackRegion =<%= @felix_os_region %><% end %>
+<% if @felix_mtuIfacePattern -%>mtuIfacePattern = <%= @felix_mtuIfacePattern %><% end %>
 #FelixHostname = hostname

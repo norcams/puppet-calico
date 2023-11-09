@@ -12,6 +12,7 @@ class calico::compute (
   $felix_template          = $calico::felix_template,
   $felix_vxlan_port        = $calico::felix_vxlan_port,
   $felix_os_region         = $calico::felix_os_region,
+  $felix_mtuIfacePattern   = $calico::felix_mtuIfacePattern,
   $felix_etcd_endpoints    = $calico::felix_etcd_endpoints,
   $metadata_service_enable = $calico::compute_metadata_service_enable,
   $manage_bird_config      = $calico::compute_manage_bird_config,
