@@ -39,7 +39,6 @@ class calico::params {
 #  $manage_packages                  = false
 #  $manage_repo                      = false
 #  $manage_epel                      = false
-  $neutron_service_default          = 'neutron-server'
   $reflector_bird_template          = 'calico/reflector/bird.conf.erb'
   $reflector_bird6_template         = 'calico/reflector/bird6.conf.erb'
   $reflector_client_template        = 'calico/reflector/client.erb'
@@ -57,7 +56,6 @@ class calico::params {
           $controller_package       = $controller_package_default
           $felix_service            = $felix_service_default
           $libvirt_service          = $libvirt_service_default
-          $neutron_service          = $neutron_service_default
           $qemu_conf                = $qemu_conf_default
         }
       }
@@ -69,7 +67,6 @@ class calico::params {
       $controller_package       = $controller_package_default
       $felix_service            = $felix_service_default
       $libvirt_service          = $libvirt_service_default
-      $neutron_service          = $neutron_service_default
       $qemu_conf                = $qemu_conf_default
     }
     default: {

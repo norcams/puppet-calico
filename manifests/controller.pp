@@ -3,6 +3,7 @@
 class calico::controller (
   $controller_package        = $calico::controller_package,
   $controller_package_ensure = $calico::controller_package_ensure,
+  $neutron_service           = 'httpd',
   $etcd_host                 = $calico::controller_etcd_host,
   $etcd_port                 = $calico::controller_etcd_port,
 ) {
@@ -19,6 +20,5 @@ class calico::controller (
 
   # Install the package, then notify the neutron service
   Package[$calico::controller_package] ~>
-  Service[$calico::neutron_service]
-
+  Service[$neutron_service]
 }
